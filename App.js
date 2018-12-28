@@ -7,29 +7,22 @@
  */
 
 import React, {Component} from 'react';
-import { StyleSheet, TextInput, Animated, View, Text, Easing, TouchableOpacity, Alert } from 'react-native';
-import { Login } from './src/components';
 import { Provider } from 'react-redux';
-import { appStore } from "./src/store";
+import { appStore } from './src/store';
+import { Entry } from './src/components/entry';
 
-export default class App extends Component {
- 
+export class App extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
     return (
       <Provider store={appStore}>
-      <View style={styles.container}>
-        <Login />
-      </View>
+        <Entry />
       </Provider>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#282c34',
-  }
-});
+

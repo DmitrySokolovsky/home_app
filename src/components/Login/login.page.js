@@ -1,11 +1,13 @@
 import React from 'react';
 import { StyleSheet, TextInput, Animated, View, Text, Easing, TouchableOpacity } from 'react-native';
+import { connect } from 'react-redux';
+import { verifyUser } from '../../store/actions';
 
-export class Login extends React.Component {
+export class _Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-          answer: ''
+          name: ''
         }
     
         this.spinValue = new Animated.Value(0);
@@ -26,6 +28,18 @@ export class Login extends React.Component {
           }
         ).start(() => this.spin());
       }
+
+      onNameChange = (text) => {
+        console.log(text);
+        this.setState({
+          name: text
+        });
+      }
+
+      onLogInPress = () => {
+        console.log(this.state.name);
+        this.props.setUser(this.state.name);
+      }
     
       render() {
         const spin = this.spinValue.interpolate({
@@ -42,8 +56,8 @@ export class Login extends React.Component {
                   height: 150
                   }} 
                 source={require('../../assets/logo.png')} />
-              <TextInput style={styles.nameInput} placeholderTextColor="#282c34" placeholder="ИМЯ"/>
-              <TouchableOpacity>
+              <TextInput style={styles.nameInput} placeholderTextColor="#282c34" placeholder="ИМЯ" onChangeText={(text) => this.setState({ name: text })}/>
+              <TouchableOpacity onPress={this.onLogInPress}>
                 <View style={styles.btnContainer}>
                   <Text style={styles.btnText}>Войти</Text>
                 </View>
@@ -88,3 +102,11 @@ export class Login extends React.Component {
         color: '#282c34',
       }
     });
+
+    const mapDispatchToProps = (dispatch) => ({
+      setUser: (userName) => {
+        dispatch(verifyUser(userName));
+      }
+    });
+
+    export const Login = connect(null, mapDispatchToProps)(_Login);
