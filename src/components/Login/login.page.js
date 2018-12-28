@@ -30,14 +30,12 @@ export class _Login extends React.Component {
       }
 
       onNameChange = (text) => {
-        console.log(text);
         this.setState({
           name: text
         });
       }
 
       onLogInPress = () => {
-        console.log(this.state.name);
         this.props.setUser(this.state.name);
       }
     

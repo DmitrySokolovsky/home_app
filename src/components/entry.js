@@ -9,11 +9,7 @@ class _Entry extends Component {
     }
 
     componentDidMount() {
-        if (this.props.userName) {
-            console.log('this.props.userName');
-        } else {
-            console.log('this.props.u');
-        }
+        
     }
 
     render() {

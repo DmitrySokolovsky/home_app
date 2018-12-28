@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Dimensions, StyleSheet, TouchableOpacity, Animated } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { TabView, SceneMap } from 'react-native-tab-view';
+import { Todo } from '../../screens';
 
 export class MainTabView extends React.Component {
     constructor(props) {
@@ -52,7 +53,7 @@ export class MainTabView extends React.Component {
             <TabView 
                 navigationState={this.state}
                 renderScene={SceneMap({
-                    todos: Test,
+                    todos: Todo,
                     chat: Test2,
                     productList: Test3,
                     statistics: Test4
