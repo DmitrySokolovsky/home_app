@@ -1,10 +1,13 @@
 import React from 'react';
-import { View, Dimensions, StyleSheet, TouchableOpacity, Animated } from 'react-native';
+import { View, Dimensions, StyleSheet, TouchableOpacity, Animated, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { TabView, SceneMap } from 'react-native-tab-view';
 import { Todo } from '../../screens';
+import { AppHeader } from '../../components';
+import { connect } from 'react-redux';
+import { logOut } from '../../store/actions';
 
-export class MainTabView extends React.Component {
+class _MainTabView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -16,6 +19,10 @@ export class MainTabView extends React.Component {
                     { key: 'statistics', title: 'Статистика', iconName: 'chart-bar' },
                 ]
         }
+    }
+
+    logOutHandler = () => {
+        this.props.logOut();
     }
 
     renderTabBar = (props) => {
@@ -49,20 +56,26 @@ export class MainTabView extends React.Component {
       }
 
     render() {
+        let routeName = this.state.routes[this.state.index].title;
+
         return (
-            <TabView 
-                navigationState={this.state}
-                renderScene={SceneMap({
-                    todos: Todo,
-                    chat: Test2,
-                    productList: Test3,
-                    statistics: Test4
-                })}
-                renderTabBar={this.renderTabBar}
-                onIndexChange={index => this.setState({ index })}
-                initialLayout={{ width: Dimensions.get('window').width, height: Dimensions.get('window').height}}
-                tabBarPosition="bottom"
-            />
+            <View style={{ flex: 1 }}>
+
+                <AppHeader routeName={routeName} userName={this.props.userName} logOutHandler={this.logOutHandler} />
+                <TabView 
+                    navigationState={this.state}
+                    renderScene={SceneMap({
+                        todos: Todo,
+                        chat: Test2,
+                        productList: Test3,
+                        statistics: Test4
+                    })}
+                    renderTabBar={this.renderTabBar}
+                    onIndexChange={index => this.setState({ index })}
+                    initialLayout={{ width: Dimensions.get('window').width, height: Dimensions.get('window').height}}
+                    tabBarPosition="bottom"
+                />
+            </View>
         );
     }
 }
@@ -88,12 +101,23 @@ const styles = StyleSheet.create({
     }
 });
 
-const Test = () => {
-    return (
-        <View style={{flex: 1, backgroundColor: '#61dafb'}}>
-        </View>
-    );
-}
+const mapStateToProps = (state) => {
+    let userName = state.user.user;
+    return {
+        userName
+    };
+};
+
+const mapDispatchToProps = (dispatch) => ({
+    logOut: () => {
+        dispatch(logOut());
+    }
+});
+
+export const MainTabView = connect(mapStateToProps, mapDispatchToProps)(_MainTabView);
+
+
+
 
 const Test2 = () => {
     return (
