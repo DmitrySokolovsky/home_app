@@ -44,8 +44,6 @@ export class AppHeader extends React.Component {
         });
     }
 
-
-
     toggleExitBtnHandler = () => {
         console.log(this.state.exitBtnVisible);
         if(!this.state.exitBtnVisible) {
@@ -85,7 +83,7 @@ export class AppHeader extends React.Component {
                     {
                         this.state.exitBtnVisible ? 
                         
-                            <TouchableOpacity onPress={this.props.onPressHandler}>
+                            <TouchableOpacity onPress={this.logOutHandler}>
                                 <Animated.View style={{ marginTop, marginBottom }}>
                                     <Text style={{ color: 'white', marginRight: 10 }}>Выход</Text>
                                  </Animated.View>
