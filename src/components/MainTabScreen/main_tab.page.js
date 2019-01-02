@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Dimensions, StyleSheet, TouchableOpacity, Animated, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { TabView, SceneMap } from 'react-native-tab-view';
-import { Todo } from '../../screens';
+import { Todo, Chat } from '../../screens';
 import { AppHeader } from '../../components';
 import { connect } from 'react-redux';
 import { logOut } from '../../store/actions';
@@ -66,7 +66,7 @@ class _MainTabView extends React.Component {
                     navigationState={this.state}
                     renderScene={SceneMap({
                         todos: Todo,
-                        chat: Test2,
+                        chat: Chat,
                         productList: Test3,
                         statistics: Test4
                     })}
