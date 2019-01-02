@@ -87,7 +87,7 @@ export class AppHeader extends React.Component {
                         
                             <TouchableOpacity onPress={this.props.onPressHandler}>
                                 <Animated.View style={{ marginTop, marginBottom }}>
-                                    <Text style={{ color: 'white', marginRight: 10 }}>Выход</Text>
+                                    <Text style={{ color: 'white', marginRight: 10, fontSize: 20 }}>Выход</Text>
                                  </Animated.View>
                             </TouchableOpacity>
                         
