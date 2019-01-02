@@ -1,7 +1,6 @@
 import React from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, Animated, Easing } from 'react-native';
 import { Avatar } from 'react-native-elements';
-import { AnimatedButton } from '../../shared';
 
 export class AppHeader extends React.Component {
     constructor(props) {
