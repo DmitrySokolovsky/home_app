@@ -1,28 +1,45 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableWithoutFeedback, Animated, Easing } from 'react-native';
 
 export class ListItem extends React.PureComponent {
     constructor(props) {
         super(props);
+
+        this.state = {
+            descriptionVisible: false,
+            expandDescriptionValue: new Animated.Value(0)
+        }
+    }
+
+    toggleDescription = () => {
+        this.setState({
+            descriptionVisible : !this.state.descriptionVisible  //Step 2
+        });
+
     }
 
     render() {
         let { title, description } = this.props.item;
-        console.log(this.props.item);
+
         return (
-            
+            <TouchableWithoutFeedback onPress={this.toggleDescription}>
             <View style={styles.itemContainer}>
-                <View style={styles.container}>
+                <View style={styles.container} onLayout={this._setMinHeight}>
                     <View style={styles.avatar}>
                         <Text style={styles.avatarTitle}>B</Text>
                     </View>
-                    <View>
+                    <View style={styles.name}>
                         <Text style={styles.title}>{title}</Text>
                     </View>
-                    
-                </View><Text style={styles.description}>{description}</Text>
+
+                </View>
+                {
+                    this.state.descriptionVisible ? 
+                        <Text style={styles.description}>{description}</Text> 
+                    : null
+                }
             </View>
-            
+            </TouchableWithoutFeedback>
         );
     }
 }
@@ -30,16 +47,21 @@ export class ListItem extends React.PureComponent {
 const styles = StyleSheet.create({
     container: {
         flex: 0,
-        flexDirection: 'row'
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        margin: 5,
     },
     itemContainer: {
         flex: 0,
         width: '100%',
-        // height: 100,
         borderWidth: 2,
         borderColor: '#282c34',
         backgroundColor: '#61dafb',
         flexDirection: 'column',
+    },
+    name: {
+        marginLeft: 25
     },
     text: {
         color: 'red'
