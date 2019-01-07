@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
-import { AddTodoHeader } from '../../components';
+import { AddTodoHeader, AddTodoForm } from '../../components';
 import { List } from '../../shared';
 import firebase from 'react-native-firebase';
 
@@ -36,7 +36,7 @@ export class Todo extends React.Component {
             <View style={styles.container}>
                 <AddTodoHeader toggleForm={this.toggleForm} formOpened={this.state.addFormVisible}/>
                 {
-                    this.state.addFormVisible ? null : <List data={this.state.todos}/>
+                    this.state.addFormVisible ? <AddTodoForm /> : <List data={this.state.todos}/>
                 }
             </View>
         );
