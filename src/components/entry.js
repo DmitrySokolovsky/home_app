@@ -8,10 +8,6 @@ class _Entry extends Component {
         super(props);
     }
 
-    componentDidMount() {
-        
-    }
-
     render() {
         let { userName } = this.props;
         return (

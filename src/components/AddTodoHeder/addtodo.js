@@ -33,7 +33,7 @@ export class AddTodoHeader extends React.Component {
 
         return (
             <View style={styles.actionBar}>
-                <Animated.View style={ {transform: [{rotate: rotateToClose}], marginLeft: 10} }>
+                <Animated.View style={ {transform: [{rotate: rotateToClose}], marginRight: 10} }>
                     <Icon name="plus" size={30} color="#61dafb" onPress={this.onIconPress}/>
                 </Animated.View>
 
@@ -57,14 +57,15 @@ const styles = StyleSheet.create({
     actionBar: {
         flex: 0,
         height: 40,
-        flexDirection: 'row',
+        flexDirection: 'row-reverse',
         justifyContent: 'space-between',
         alignItems: 'center',
         backgroundColor: '#282c34'
     },
     btnContainer: {
         flex: 0,
-        flexDirection: 'row'
+        flexDirection: 'row',
+        marginLeft: 10
     },
     btn: {
         marginRight: 20,

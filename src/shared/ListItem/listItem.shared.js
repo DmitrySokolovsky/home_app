@@ -1,5 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableWithoutFeedback, Animated, Easing } from 'react-native';
+import { View, Text, StyleSheet, TouchableWithoutFeedback, Animated } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome5';
+import { Category, Priority, Status } from '../../models';
+import { DetailsItem } from '../DetaiksItem';
 
 export class ListItem extends React.PureComponent {
     constructor(props) {
@@ -11,6 +14,10 @@ export class ListItem extends React.PureComponent {
         }
     }
 
+    componentDidMount() {
+        console.log(this.props.item);
+    }
+
     toggleDescription = () => {
         this.setState({
             descriptionVisible : !this.state.descriptionVisible  //Step 2
@@ -18,24 +25,72 @@ export class ListItem extends React.PureComponent {
 
     }
 
+    _getPriorityBackground = (priorityId) => {
+        if (priorityId) {
+            switch(priorityId) {
+                case Priority.LOW: 
+                    return '#42f47d'
+                    break;
+                case Priority.MEDIUM:
+                    return '#dff442'
+                    break;
+                case Priority.HIGH: 
+                    return '#f76116'
+                default:
+                    return '#61dafb'
+            }
+        }
+    }
+
+    _getIconName = (categoryId) => {
+        if (categoryId) {
+            const categoryIconName = Category.find(item => item.id === categoryId);
+            console.log(categoryIconName, "categoryIconName");
+
+            return categoryIconName.icon;
+        }
+    }
+
+    _getStatus = (statusId) => {
+        if (statusId) {
+            switch(statusId) {
+                case Status.ACTIVE:
+                    return 'В работе'
+                    break;
+                case Status.DONE:
+                    return 'Готово'
+                    break;
+                default:
+                    return ''
+            }
+        }
+    }
+
     render() {
-        let { title, description } = this.props.item;
+        const { title, description, assignee, categoryId, deadline, priorityId, statusId } = this.props.item;
+        const iconName = this._getIconName(categoryId);
+        const priorityColor = this._getPriorityBackground(priorityId);
+        const statusName = this._getStatus(statusId);
 
         return (
             <TouchableWithoutFeedback onPress={this.toggleDescription}>
             <View style={styles.itemContainer}>
-                <View style={styles.container} onLayout={this._setMinHeight}>
-                    <View style={styles.avatar}>
-                        <Text style={styles.avatarTitle}>B</Text>
+                <View style={styles.container}>
+                    <View style={styles.iconContainer}>
+                        <Icon name={iconName} size={50}/>
                     </View>
                     <View style={styles.name}>
                         <Text style={styles.title}>{title}</Text>
+                        <Text style={styles.status}>{statusName}</Text>
+                    </View>
+                    <View style={[styles.avatar, {backgroundColor: priorityColor}]}>
+                        <Text style={styles.avatarTitle}>{assignee[0]}</Text>
                     </View>
 
                 </View>
                 {
                     this.state.descriptionVisible ? 
-                        <Text style={styles.description}>{description}</Text> 
+                        <DetailsItem description={description} deadline={deadline} titleBtn="Закрыть задание"/>
                     : null
                 }
             </View>
@@ -48,7 +103,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 0,
         flexDirection: 'row',
-        justifyContent: 'flex-start',
+        justifyContent: 'space-between',
         alignItems: 'center',
         margin: 5,
     },
@@ -59,6 +114,7 @@ const styles = StyleSheet.create({
         borderColor: '#282c34',
         backgroundColor: '#61dafb',
         flexDirection: 'column',
+        padding: 5
     },
     name: {
         marginLeft: 25
@@ -70,8 +126,22 @@ const styles = StyleSheet.create({
         color: '#282c34',
         fontSize: 20
     },
+    status: {
+        color: '#282c34',
+        fontSize: 15
+    },
     description: {
-        color: 'white'
+        color: 'white',
+        fontSize: 15,
+        marginLeft: 3
+    },
+    descriptionContainer: {
+        padding: 5,
+        flex: 0,
+        flexDirection: 'row'
+    },
+    iconContainer: {
+        width: 50
     },
     avatar: {
         height: 70,
@@ -79,12 +149,12 @@ const styles = StyleSheet.create({
         borderRadius: 35,
         borderColor: '#282c34',
         borderWidth: 2,
-        backgroundColor: 'white',
         flex: 0,
         justifyContent: 'center',
         alignItems: 'center',
     },
     avatarTitle: {
-        color: '#282c34'
+        color: '#282c34',
+        fontSize: 25
     }
 });

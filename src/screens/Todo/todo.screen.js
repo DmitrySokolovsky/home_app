@@ -17,12 +17,15 @@ export class Todo extends React.Component {
     }
 
     componentDidMount() {
-        let todoRef = this.db.ref('todos/');
-        todoRef.on('value', snapshot => {
+        console.log("REQ");
+        const todoRef = this.db.ref('todos/');
+        
+        todoRef.once('value').then((snapshot) => {
+            console.log(snapshot.val());
             this.setState({
                 todos: snapshot.val()
             });
-        });
+        }).catch((err) => console.log(err));
     }
 
     toggleForm = () => {
